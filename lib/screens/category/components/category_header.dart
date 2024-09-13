@@ -1,3 +1,5 @@
+import 'package:admin/utility/extensions.dart';
+import 'package:admin/utility/snack_bar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../utility/constants.dart';
@@ -19,6 +21,8 @@ class CategoryHeader extends StatelessWidget {
         Expanded(child: SearchField(
           onChange: (val) {
             //TODO: should complete call filterCategories
+            print(val);
+            context.dataProvider.filterCategories(val);
 
           },
         )),
@@ -83,7 +87,12 @@ class SearchField extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         suffixIcon: InkWell(
-          onTap: () {},
+          onTap: () {
+             // added extra for seach category function 
+             // TODO: should complete call filterCategories after clicking the search button.
+            SnackBarHelper.showErrorSnackBar("search button function  not implemented yet !!!");
+            context.dataProvider.getAllCategory(); // some problem after search bar is empty it not showing the all items present in the category section.
+          },
           child: Container(
             padding: EdgeInsets.all(defaultPadding * 0.75),
             margin: EdgeInsets.symmetric(horizontal: defaultPadding / 2),

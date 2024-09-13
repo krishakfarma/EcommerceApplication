@@ -81,9 +81,62 @@ class CategoryProvider extends ChangeNotifier {
 
 
 
-  //TODO: should complete updateCategory
+  //TODO: should complete updateCategory 7.task completed by siddhant
+  updateCategory() async
+  {
+    try{
+      Map<String, dynamic> formDataMap = {
+        'name': categoryNameCtrl.text,
+        'image':categoryForUpdate?.image ?? '',
+      };
 
-  //TODO: should complete submitCategory
+      final FormData form = await createFormData(imgXFile: imgXFile, formData: formDataMap);
+
+      final response= await service.updateItem(endpointUrl: 'categories', itemData: form,itemId: categoryForUpdate?.sId ?? '');
+
+      if(response.isOk)
+      {
+        ApiResponse apiResponse=ApiResponse.fromJson(response.body,null);
+        if(apiResponse.success==true)
+        {
+          clearFields();
+          SnackBarHelper.showSuccessSnackBar('${apiResponse.message}');
+          _dataProvider.getAllCategory();
+          log("category updated !!!");
+        }
+        else
+        {
+          SnackBarHelper.showErrorSnackBar("Failed to update category "+'${apiResponse.message}');
+        }
+      }
+      else{
+        SnackBarHelper.showErrorSnackBar("Something went wrong ${response.body?['message'] ?? response.statusText}");
+      }
+
+
+
+
+    }catch(e)
+    {
+      print(e);
+      SnackBarHelper.showErrorSnackBar("An Error occured "+e.toString());
+      rethrow;
+    }
+  }
+
+  //TODO: should complete submitCategory 8. task completed by siddhant  there are two button one is add and another is submit that why we require the set this condition
+  submitCategory() async
+  {
+    if(categoryForUpdate!=null)
+    {
+      updateCategory();
+      
+    }
+    else
+    {
+      addCategory();
+    }
+  }
 
 
   void pickImage() async {
@@ -96,9 +149,41 @@ class CategoryProvider extends ChangeNotifier {
     }
   }
 
-  //TODO: should complete deleteCategory
+  //TODO: should complete deleteCategory 10. task completed by siddhant to delete the category 
+  deleteCategory(Category category) async
+  {
+    try{
+      Response response= await service.deleteItem(endpointUrl: 'categories', itemId: category.sId ?? '');
+      if(response.isOk)
+      {
+        ApiResponse apiResponse=ApiResponse.fromJson(response.body,null);
+        if(apiResponse.success==true)
+        {
+          SnackBarHelper.showSuccessSnackBar('${apiResponse.message}');
+          _dataProvider.getAllCategory();
+          log("category deleted !!!");
+        }
 
-  //TODO: should complete setDataForUpdateCategory
+      }else{
+        SnackBarHelper.showErrorSnackBar("Something went wrong ${response.body?['message'] ?? response.statusText}");
+      }
+
+
+
+    }catch(e)
+    {
+      print(e);
+      SnackBarHelper.showErrorSnackBar("An Error occured "+e.toString());
+      rethrow;
+    }
+  }
+
+
+
+
+
+
+  //TODO: should complete setDataForUpdateCategory 9.task completed by siddhant in add_category_form.dart at start 
 
 
   //? to create form data for sending image with body
