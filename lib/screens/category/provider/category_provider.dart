@@ -50,6 +50,7 @@ class CategoryProvider extends ChangeNotifier {
         {
           clearFields();
           SnackBarHelper.showSuccessSnackBar('${apiResponse.message}');
+          _dataProvider.getAllCategory();
           log("category added !!!");
         }
         else

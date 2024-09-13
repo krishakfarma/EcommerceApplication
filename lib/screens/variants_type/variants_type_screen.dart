@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import '../../utility/constants.dart';
 import 'components/add_variant_type_form.dart';
 import 'components/variant_type_header.dart';

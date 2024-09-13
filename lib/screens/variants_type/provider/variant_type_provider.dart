@@ -1,11 +1,7 @@
-import 'dart:developer';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import '../../../core/data/data_provider.dart';
-import '../../../models/api_response.dart';
 import '../../../models/variant_type.dart';
 import '../../../services/http_services.dart';
-import '../../../utility/snack_bar_helper.dart';
 
 class VariantsTypeProvider extends ChangeNotifier {
   HttpService service = HttpService();
