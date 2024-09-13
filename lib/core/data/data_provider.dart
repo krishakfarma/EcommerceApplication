@@ -59,13 +59,58 @@ class DataProvider extends ChangeNotifier {
   List<MyNotification> _filteredNotifications = [];
   List<MyNotification> get notifications => _filteredNotifications;
 
-  DataProvider() {}
+  // this is data provider constructor when it will automatically fetches the data inside the Category section 
+  DataProvider() {
+  getAllCategory(); // not showing the snack bar thats why we will not passing any parameter to the fuction 
+  }
 
 
-  //TODO: should complete getAllCategory
+  //TODO: should complete getAllCategory 3. task completed by siddhant to show the category into the category section screen 
+  Future<List<Category>> getAllCategory({bool showSnack=false}) async
+  {
+    try{
+      Response response= await service.getItems(endpointUrl: 'categories');
+      if(response.isOk){
+        ApiResponse<List<Category>> apiResponse=ApiResponse<List<Category>>.fromJson(response.body, (json) => (json as List).map((item) => Category.fromJson(item)).toList()); // API response from json
+        _allCategories=apiResponse.data ?? [];
+          _filteredCategories=List.from(_allCategories);
+          notifyListeners();
+         if(showSnack) SnackBarHelper.showSuccessSnackBar(apiResponse.message);
+        
+      }
+
+    }catch(e)
+    {
+
+      if(showSnack) SnackBarHelper.showErrorSnackBar("An Error occured "+e.toString());
+      rethrow;
+
+    }
+
+    return _filteredCategories;
+    }
 
 
-  //TODO: should complete filterCategories
+  //TODO: should complete filterCategories 4. task completed by siddhant
+
+  void filterCategories(String keyword) {
+    if(keyword.isEmpty)
+    {
+      _filteredCategories=List.from(_allCategories);
+    }
+    else
+    {
+      final lowerKeyword=keyword.toLowerCase();
+      _filteredCategories = _allCategories.where((category){
+        return (category.name ?? '').toLowerCase().contains(lowerKeyword);
+      }).toList();
+      notifyListeners();
+    }
+  }
+
+
+  //TODO: should complete getAllSubCategory 
+      
 
   //TODO: should complete getAllSubCategory
 

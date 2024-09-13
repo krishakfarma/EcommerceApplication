@@ -131,6 +131,7 @@ class ProductSubmitForm extends StatelessWidget {
                   if (value == null || value.isEmpty) {
                     return 'Please enter name';
                   }
+                  return null;
                 },
               ),
               SizedBox(height: defaultPadding),
