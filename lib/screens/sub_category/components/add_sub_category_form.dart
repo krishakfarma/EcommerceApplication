@@ -97,7 +97,8 @@ class SubCategorySubmitForm extends StatelessWidget {
                       // Validate and save the form
                       if (context.subCategoryProvider.addSubCategoryFormKey.currentState!.validate()) {
                         context.subCategoryProvider.addSubCategoryFormKey.currentState!.save();
-                        //TODO: should complete call submitSubCategory
+                        //TODO: should complete call submitSubCategory 13. task completed by siddhant . (2 nd for the sub category)
+                        context.subCategoryProvider.addSubCategory();
                         Navigator.of(context).pop();
                       }
                     },

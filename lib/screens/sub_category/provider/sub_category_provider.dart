@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:admin/models/api_response.dart';
+import 'package:admin/utility/snack_bar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../../core/data/data_provider.dart';
@@ -21,7 +25,39 @@ class SubCategoryProvider extends ChangeNotifier {
   SubCategoryProvider(this._dataProvider);
 
 
-  //TODO: should complete addSubCategory
+  //TODO: should complete addSubCategory 12. task completed by siddhant  ( 1 st for sub category);
+  addSubCategory() async {
+    try{
+      Map<String,dynamic> subCategory={'name':subCategoryNameCtrl.text,'categoryId':selectedCategory?.sId};
+      final response=await service.addItem(endpointUrl: 'subCategories', itemData: subCategory);
+      if(response.isOk)
+      {
+        ApiResponse apiResponse=ApiResponse.fromJson(response.body, null);
+
+        if(apiResponse.success==true)
+        {
+          
+          clearFields();
+          SnackBarHelper.showSuccessSnackBar("${apiResponse.message}");
+          log("sub category added");
+        }
+        else
+        {
+          SnackBarHelper.showErrorSnackBar("failed to add sub category due to ${apiResponse.message}");
+          
+        }
+      }else{
+        SnackBarHelper.showErrorSnackBar("failed to add sub category due to ${response.body['message'] ?? response.statusText}");
+      }
+      
+
+    }catch(e)
+    {
+      print(e);
+      SnackBarHelper.showErrorSnackBar("failed to add sub category due to $e");
+      rethrow;
+    }
+  }
 
 
   //TODO: should complete updateSubCategory

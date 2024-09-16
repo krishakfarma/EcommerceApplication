@@ -109,7 +109,25 @@ class DataProvider extends ChangeNotifier {
   }
 
 
-  //TODO: should complete getAllSubCategory 
+  //TODO: should complete getAllSubCategory 14. task completed by siddhant (3 task for sub category)
+  Future<List<SubCategory>> getAllSubCategory({bool showSnack=false}) async
+  {
+    try
+    {
+      Response response= await service.getItems(endpointUrl: 'subCategories');
+      if(response.isOk)
+      {
+        ApiResponse<List<SubCategory>> apiResponse=ApiResponse<List<SubCategory>>.fromJson(response.body, (json) => (json as List).map((item) => SubCategory.fromJson(item)).toList());
+        // to stoped here becoz of work ... 
+
+      }
+
+    }catch(e)
+    {
+
+    }
+  }
+
       
 
   //TODO: should complete getAllSubCategory
