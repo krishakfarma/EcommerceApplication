@@ -1,3 +1,4 @@
+import 'package:admin/utility/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../utility/constants.dart';
@@ -18,7 +19,9 @@ class SubCategoryHeader extends StatelessWidget {
         Spacer(flex: 2),
         Expanded(child: SearchField(
           onChange: (val) {
-            //TODO: should complete call filterSubCategories
+            //TODO: should complete call filterSubCategories 
+            print(val);
+            context.dataProvider.filterSubCategories(val);
           },
         )),
         ProfileCard()
@@ -82,7 +85,10 @@ class SearchField extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         suffixIcon: InkWell(
-          onTap: () {},
+          onTap: () {
+            //TODO: should complete call filterSubCategories 18. task completed by siddhant (5 th task for sub category )
+            context.dataProvider.getAllSubCategory();
+          },
           child: Container(
             padding: EdgeInsets.all(defaultPadding * 0.75),
             margin: EdgeInsets.symmetric(horizontal: defaultPadding / 2),

@@ -62,6 +62,7 @@ class DataProvider extends ChangeNotifier {
   // this is data provider constructor when it will automatically fetches the data inside the Category section 
   DataProvider() {
   getAllCategory(); // not showing the snack bar thats why we will not passing any parameter to the fuction 
+  getAllSubCategory(); // not showing the snack bar thats why we will not passing any parameter to the fuction  also in starting the we are loading the data provider class when initilized
   }
 
 
@@ -104,8 +105,9 @@ class DataProvider extends ChangeNotifier {
       _filteredCategories = _allCategories.where((category){
         return (category.name ?? '').toLowerCase().contains(lowerKeyword);
       }).toList();
-      notifyListeners();
+      
     }
+    notifyListeners();
   }
 
 
@@ -117,23 +119,46 @@ class DataProvider extends ChangeNotifier {
       Response response= await service.getItems(endpointUrl: 'subCategories');
       if(response.isOk)
       {
-        ApiResponse<List<SubCategory>> apiResponse=ApiResponse<List<SubCategory>>.fromJson(response.body, (json) => (json as List).map((item) => SubCategory.fromJson(item)).toList());
-        // to stoped here becoz of work ... 
+        ApiResponse<List<SubCategory>> apiResponse=ApiResponse<List<SubCategory>>.fromJson(response.body, (json) => (json as List).map((item) => SubCategory.fromJson(item)).toList());// Apiresponse.fromJson
+
+        _allSubCategories=apiResponse.data ?? [];
+        _filteredSubCategories=List.from(_allSubCategories); // initlilize the filtered list with all data 
+        notifyListeners();
+        if(showSnack) SnackBarHelper.showSuccessSnackBar(apiResponse.message);
 
       }
 
     }catch(e)
     {
-
+      if(showSnack) SnackBarHelper.showErrorSnackBar("An Error occured "+e.toString());
+      rethrow;
+    
     }
+
+    return _filteredSubCategories;
   }
 
+   //TODO: should complete filterSubCategories 15. task completed by siddhant (4 task for sub category)
+
+  void filterSubCategories(String keyword) {
+
+    if(keyword.isEmpty)
+    {
+      _filteredSubCategories=List.from(_allSubCategories);
+    }
+    else
+    {
+      final lowerKeyword=keyword.toLowerCase();
+      _filteredSubCategories = _allSubCategories.where((subCategory){
+        return (subCategory.name ?? '').toLowerCase().contains(lowerKeyword);
+      }).toList();
       
+    }
+    notifyListeners();
+  }
 
-  //TODO: should complete getAllSubCategory
 
-
-  //TODO: should complete filterSubCategories
+ 
 
 
   //TODO: should complete getAllBrands

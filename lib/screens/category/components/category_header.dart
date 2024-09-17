@@ -91,7 +91,7 @@ class SearchField extends StatelessWidget {
              // added extra for seach category function 
              // TODO: should complete call filterCategories after clicking the search button.
             SnackBarHelper.showErrorSnackBar("search button function  not implemented yet !!!");
-            context.dataProvider.getAllCategory(); // some problem after search bar is empty it not showing the all items present in the category section.
+            context.dataProvider.getAllCategory(); // some problem after search bar is empty it not showing the all items present in the category section. now showing becoz filterCategories notifylistner is outoff else statement
           },
           child: Container(
             padding: EdgeInsets.all(defaultPadding * 0.75),

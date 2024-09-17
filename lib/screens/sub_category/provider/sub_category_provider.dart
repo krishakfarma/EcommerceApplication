@@ -39,6 +39,8 @@ class SubCategoryProvider extends ChangeNotifier {
           
           clearFields();
           SnackBarHelper.showSuccessSnackBar("${apiResponse.message}");
+          _dataProvider.getAllSubCategory();
+
           log("sub category added");
         }
         else
@@ -60,7 +62,8 @@ class SubCategoryProvider extends ChangeNotifier {
   }
 
 
-  //TODO: should complete updateSubCategory
+  //TODO: should complete updateSubCategory 16. task completed by siddhant (5 th task for update sub category)
+  
 
   //TODO: should complete submitSubCategory
 
